@@ -1,0 +1,207 @@
+import { CodeComparison } from "@/components/ui/code-comparison";
+
+# KU High School Design Competition 2024
+
+## Background
+
+The University of Kansas defines the competition as "a free event that takes
+place annually in the fall, putting high school students' creativity, teamwork
+skills, technical knowledge, and abilities to the test. Each High School Design
+features new engineering design challenges in various engineering disciplines
+created by students in the Self Engineering Leadership Fellows (SELF) Program.
+Working as individuals or in small teams, high school students design, build,
+and test a project that addresses the design criteria."
+
+### The KU Design Challenge - Computer Science
+
+Full Details can be found [here](https://engr.ku.edu/hsd-competition-details).
+
+In summary:
+
+You’re in a new city hired by an energy company that has lots of weather data
+and needs summaries for the data gathered. You must present an application to
+the energy company's' stakeholders (consists of customers, clients, and
+investors). You must create a usable interface to query and describe data that
+they would like to see. This includes, minimum, maximum, average, specific
+points, and other related functions. The user must also be able to provide a
+dataset programatically, either through command line, or user-interface.
+
+Additionaly, there are extra features that can be completed for extra points.
+These consist of the following, Connection to
+[Open-Meteo](https://open-meteo.com/) external API, a generated histogram, a
+set of RestfulAPI endpoints to allow external use of the application.
+
+Finally, there will be an on-site hackathon in which 2 hours will be spent to
+implement a mystery feature that is unknown until you enter the campus. At the
+campus, you will also be expected to have lots of knowledge about your
+application, and be able to present it.
+
+## Design Choices
+
+When brainstorming ideas for this competition, three ideas came to mind to build
+this application.
+
+- An application that could be invoked from the terminal that launches a CLI
+  with a text based user interface, and returns text, or text based visuals.
+- A webpage based application with a text based interface like ChatGPT and SQL,
+  where you enter a prompt, and it returns either a text based response, or
+  renders custom code for complicated responses, such as tables or hisotgrams.
+- A webpage based application with a GUI based interface with buttons, inputs,
+  and date-pickers and returns text based responses, or renders custom code for
+  complicated responses, such as tables or hisotgrams.
+
+After careful deliberation, I proceeded with the 2nd option, as I knew that I
+would get the best of both worlds. I would have the tools available to build
+complex outputs, like histograms, and also make the UX simple, with only having
+one input that they need to manage.
+
+## The First Iteration
+
+After deciding on the basics of the application, I needed to make more decisions
+about my application. What languages / frameworks was I going to build the
+application with? What tools / libraries was I going to build with?
+
+When building the application, I wanted to keep simplicity and low-barrier to
+entry in mind. I wanted as little abstractions as possible, with very few
+depencies. The first thing that came to mind was a Node.JS HTTP Server hosting
+static HTML, CSS, and JS.
+
+In the first iteration, I began with building a web-server. Coming from a
+Next.JS background, I didn't think much of the complexity, set up a web-server
+and return a response right? Wrong, you apparently need to handle a lot more
+than that. You need to access the URL, parse it to get important bits, such as
+the pathname, find the file on your system, parse the data, set the proper
+headers, and then end the response. This was a big shock to me how complicated
+this was, and I was shocked to see that Request and Response objects didn't
+exist.
+
+After building the sever, I proceed with the front-end. I started off with an
+input at the bottom with a button right beside it. This was going to be the
+start of my application. Here is where all of the queries would be entered and
+sent from. I tested to ensure that the form was working as intented and all
+values would be able to be parsed. I continued by implementing a query verifier
+that would contain logic to verify that the query that was entered was a valid
+query that could be parsed and sent to the server.
+
+Proceeding these implementations, I worked on the functionality portion, and
+implemented back-end logic and RestfulAPIs that could be accessed by anyone.
+These implementations took me no time at all, as the implementation details
+were very similar to that of the static files, where I must include header
+information and other details that need to be sent to the client.
+
+To wrap up the first iteration I implemented the auto-complete and added some
+additional features such as the histogram and connection to an external data
+source via a RestAPI.
+
+## The Problems with the First Iteration
+
+When building the first iteration, I came across a bug that I wasn't entirely
+sure how to fix. When using [Open-Meteo](https://open-meteo.com/) I realized
+quite quickly that I wasn't able to access any data, and the only error I
+recieved was that the response took too long to respond. After careful
+inspection and days of examination, I realized that the WiFi my computer
+connects to, Blue Valley District WiFi, disallowed connections to this API. I
+realize that connecting to a mobile hotspot allowed for the connections to go
+through and data to be sent.
+
+Another issue I ran into was a problem with my initial design philosophies and
+initial construction of my code. The code I wrote was very cumbersome and hard
+to follow. At the time, I had very little comments on what was going on in
+specific functions and the code was very unorganized. One issue was that
+Node.JS liked to overcomplicate the HTTP Server, and I knew of alternatives to
+reduce the complexity. [Bun](https://bun.sh/)! Bun implemented tons of
+additional features, such as `Bun.serve`, for web servers and loaded
+applications up to 10x faster. With this idea in mind, I decided to rewrite my code and reiterate on a better, faster design.
+
+Here is an example of the complexity of a Node.JS HTTP Server (before), and a
+Bun Server with `Bun.serve` (after):
+
+<CodeComparison
+  beforeCode={`import http from "http";\nimport fs from "fs";\n\nconst PORT = 5000;\n\nconst server = http.createServer(async (req, res) => {\n\tconst reqURL = new URL(\n\t\treq.url == "/" ? "/index.html" : req.url ?? "/index.html",\n\t\t\`http://localhost:\${PORT}\`\n\t).pathname;\n\tif (reqURL.startsWith("/api/")) {\n\t\tawait handleAPI(reqURL, req, res);\n\t\treturn;\n\t}\n\tconst filePath = \`./src/frontend\${reqURL}\`;\n\ttry {\n\t\tconst file = fs.readFileSync(filePath, { encoding: "utf8" });\n\t\tif (filePath.endsWith(".html")) {\n\t\t\tres.setHeader("Content-Type", "text/html");\n\t\t} else if (filePath.endsWith(".css")) {\n\t\t\tres.setHeader("Content-Type", "text/css");\n\t\t} else if (filePath.endsWith(".js")) {\n\t\t\tres.setHeader("Content-Type", "text/javascript");\n\t\t} else if (filePath.endsWith(".svg")) {\n\t\t\tres.setHeader("Content-Type", "image/svg+xml");\n\t\t} else if (filePath.endsWith(".json")) {\n\t\t\tres.setHeader("Content-Type", "application/json");\n\t\t}\n\t\tres.end(file);\n\t} catch (err) {\n\t\tif (err.toString().includes("No such file or directory")) {\n\t\t\tres.statusCode = 404;\n\t\t\tres.end("404 - Content Not Found");\n\t\t} else {\n\t\t\tconsole.error(err);\n\t\t\tres.statusCode = 500;\n\t\t\tres.end("500 - Internal Server Error (check console)");\n\t\t}\n\t}\n});\n\nserver.listen(PORT, (error) => {\n\tif (error) {\n\t\treturn console.error(error);\n\t}\n\tconsole.log(\`Server is running on http://localhost:\${PORT}\`);\n});`}
+  afterCode={`const PORT = 5000;\n\nBun.serve({\n\tport: PORT,\n\tasync fetch(/\* @type {Request} \*/ req) {\n\t\tconst path = new URL(req.url).pathname;\n\t\tlet debug = false;\n\t\tlet res;\n\t\tif (path.startsWith("/api/")) {\n\t\t\t// Handle API\n\t\t\tdebug = true;\n\t\t\tres = handleAPI(req, path);\n\t\t} else {\n\t\t\t// Handle Static Assets (index.html, index.css, index.js, /icons/...)\n\t\t\tres = handleStatic(req, path);\n\t\t}\n\t\t// If debug, show request + response\n\t\tdebug &&\n\t\t\tconsole.log(\n\t\t\t\t"\\x1b[32m -> \\x1b[0m" +\n\t\t\t\treq.method +\n\t\t\t\t" " +\n\t\t\t\tpath +\n\t\t\t\t" " +\n\t\t\t\t(await (await req).clone().text())\n\t\t\t);\n\t\tdebug &&\n\t\t\tconsole.log(\n\t\t\t\t"\\x1b[34m <- \\x1b[0m" +\n\t\t\t\treq.method +\n\t\t\t\t" " +\n\t\t\t\tpath +\n\t\t\t\t" " +\n\t\t\t\t(await (await res).clone().text())\n\t\t\t);\n\t\treturn res;\n\t},\n});`}
+  language="javascript"
+  filename="server.js"
+  lightTheme="github-light"
+  darkTheme="github-dark"
+/>
+
+## Building a second iteration
+
+I knew after working in iteration 1, that it sufficed, but wasn't at all
+pretty, I knew that I could keep most of my code the same, but something needed
+to be done.
+
+I started by installing [bun](https://bun.sh/) and migrating from Node.JS to
+Bun. The only change that really happened was `node_module`s were installed and
+a `bun.lockb` was created. I started by reworking `server.js` from the ground
+up with some references and copies and pastes into the new server file, and
+ensured that modifying the server bundle would be easy.
+
+After rewriting, I realized that `index.js` on the front-end was carrying too
+much weight and should also be rewritten. `index.js` was split into two
+seperate files, `index.js`, the core of the application, and
+`query-constants.js`, which contains countless constants, such as schemas and
+icon registry for weather icons.
+
+I started rewriting `index.js` from the ground up with many of the same ideas
+as the first iteration, yet cleaner and more concise.
+
+After rebuilding, I went to my teachers for suggestions. One of my teachers
+advocated for some help instructions, as the program could be hard to use, and
+encouraged me to include some help tips in the application. My other teacher,
+advocated to implement custom code to have external weather data be queriable
+via a zip-code, as not everyone knows their exact latitude and longitude.
+Implementing this feature took some time, but allowed for quick iteration in
+future implementations, such as inputing a city name, or in the case of the
+hackathon, via the dataset.
+
+## Competition Day!!!
+
+The day of the competition, I didn't know what to expect. I didn't know what
+other groups may have come up with, or even the littleist bit of information
+about anything really. I just knew that what I had was good, at least, in my
+eyes, but I didn't know what anyone else may had come up with.
+
+### The Hackathon
+
+The Hackathon was a 2 hour event located at KU, where you must implement a
+mystery feature within the time provided. The feature request was to implement
+a system to query the dataset and compare it with another range in the same
+dataset. Implementing this type of feature caught me off guard, as I knew as
+soon as I heard the feature, that I needed to rewrite most of my code because I
+made an assumption earlier. The schema for what I wanted the query to look like
+was `compare dataset [query1] [query2]`, and this went a little past what I was
+expecting.
+
+When building the application, I only anticipiated for a sub-query
+to be at the end of the arguments list, and for their only to be one. If you
+look, there are two subqueries. I spent the first half-hour of the hackathon,
+panicking and attempting to implement this new feature, and realized that I
+needed to restart from just before the hackathon, and reset. Rebuilding this
+feature took most of my time, about 50 minutes of the 90 minutes that were
+remaining. After implementing this, the rest of the challenge was easy. I just
+needed to add a new query to the output checker and test both queries and
+respond accordingly. The last half-hour I spent manually checking outputs and
+ensuring that no other code broke, and I'm glad I did, as I realized some code
+that had broken previously and slipped my rader.
+
+### The Presentation
+
+Waiting for my presentation was nerve-racking. I didn't know what to expect,
+and wasn't sure if my application would hold up as well as I hoped. Preparing
+for the presentation I almost entered the wrong room, and realized a few
+seconds before I was supposed to enter. Eventually, I made it to the right
+room, and entered semi-confidently. I didn't know what to expect, nor what
+other groups may have built. I was greeted and told to set-up, and began
+building my confidence. I presented my application, and things went very
+smoothly and figured that things had gone right, and the panel really enjoyed
+my presentation. I left happy with how everything went, and headed to lunch.
+
+### The Results
+
+Around 2:00, the closing ceremony began. This part included a conclustion and
+results on placements. The Computer Science section was called first. In third
+place, ... Barstow Knights from Barstow School. Okay, okay. In second place, ... Blue Flame from Blue Valley West High School. Yayyyy!!!! Everything that
+occured after was a blur. I placed 2nd!!! (For reference 25 teams competed!)
+I was really proud of myself, and my teachers, classmates, and parents that
+helped me along this amazing journey. I was shocked.

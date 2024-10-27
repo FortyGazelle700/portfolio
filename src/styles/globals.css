@@ -1,0 +1,134 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ui-background: 0 0% 100%;
+  --ui-foreground: 222.2 84% 4.9%;
+  --ui-card: 0 0% 100%;
+  --ui-card-foreground: 222.2 84% 4.9%;
+  --ui-popover: 0 0% 100%;
+  --ui-popover-foreground: 222.2 84% 4.9%;
+  --ui-primary: 222.2 47.4% 11.2%;
+  --ui-primary-foreground: 210 40% 98%;
+  --ui-secondary: 210 40% 96.1%;
+  --ui-secondary-foreground: 222.2 47.4% 11.2%;
+  --ui-muted: 210 40% 85.1%;
+  --ui-muted-foreground: 215.4 16.3% 40.9%;
+  --ui-accent: 210 40% 96.1%;
+  --ui-accent-foreground: 222.2 47.4% 11.2%;
+  --ui-destructive: 0 84.2% 60.2%;
+  --ui-destructive-foreground: 210 40% 98%;
+  --ui-border: 214.3 31.8% 91.4%;
+  --ui-input: 214.3 31.8% 91.4%;
+  --ui-ring: 222.2 84% 4.9%;
+  --ui-radius: 0.5rem;
+  --ui-chart-1: 12 76% 61%;
+  --ui-chart-2: 173 58% 39%;
+  --ui-chart-3: 197 37% 24%;
+  --ui-chart-4: 43 74% 66%;
+  --ui-chart-5: 27 87% 67%;
+}
+
+.dark {
+  --ui-background: 222.2 84% 4.9%;
+  --ui-foreground: 210 40% 98%;
+  --ui-card: 222.2 84% 4.9%;
+  --ui-card-foreground: 210 40% 98%;
+  --ui-popover: 222.2 84% 4.9%;
+  --ui-popover-foreground: 210 40% 98%;
+  --ui-primary: 210 40% 98%;
+  --ui-primary-foreground: 222.2 47.4% 11.2%;
+  --ui-secondary: 217.2 32.6% 17.5%;
+  --ui-secondary-foreground: 210 40% 98%;
+  --ui-muted: 217.2 32.6% 27.5%;
+  --ui-muted-foreground: 215 20.2% 65.1%;
+  --ui-accent: 217.2 32.6% 17.5%;
+  --ui-accent-foreground: 210 40% 98%;
+  --ui-destructive: 0 84.2% 60.2%;
+  --ui-destructive-foreground: 210 40% 98%;
+  --ui-border: 217.2 32.6% 17.5%;
+  --ui-input: 217.2 32.6% 17.5%;
+  --ui-ring: 212.7 26.8% 83.9%;
+  --ui-chart-1: 221.2 83.2% 53.3%;
+  --ui-chart-2: 212 95% 68%;
+  --ui-chart-3: 216 92% 60%;
+  --ui-chart-4: 210 98% 78%;
+  --ui-chart-5: 212 97% 87%;
+}
+
+* {
+  @apply border-border;
+}
+html {
+  @apply scroll-pt-24 scroll-smooth bg-background;
+}
+body {
+  @apply bg-background text-foreground;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  /* shadcn/ui typography helpers */
+  .h1 {
+    @apply scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl;
+  }
+
+  .h2 {
+    @apply mt-10 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0;
+  }
+
+  .h3 {
+    @apply scroll-m-20 pb-0 text-2xl font-semibold tracking-tight;
+  }
+
+  .h4 {
+    @apply scroll-m-20 text-xl font-semibold tracking-tight;
+  }
+
+  .p {
+    @apply text-base leading-7 [&:not(:first-child)]:mt-6;
+  }
+
+  .quote {
+    @apply mt-6 border-l-2 pl-6 italic;
+  }
+
+  .list {
+    @apply my-6 ml-6 list-disc [&>li]:mt-2;
+  }
+
+  .snippet {
+    @apply relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold;
+  }
+
+  .lead {
+    @apply text-xl text-muted-foreground;
+  }
+
+  .table {
+    @apply w-full border-collapse overflow-hidden rounded-lg [&_td[align=center]]:text-center [&_td[align=right]]:text-right [&_td]:border [&_td]:px-4 [&_td]:py-2 [&_td]:text-left [&_th[align=center]]:text-center [&_th[align=right]]:text-right [&_th]:border [&_th]:px-4 [&_th]:py-2 [&_th]:text-left [&_th]:font-bold [&_tr]:m-0 [&_tr]:border-t [&_tr]:p-0 [&_tr_th]:bg-secondary;
+  }
+}
+
+.lucide {
+  @apply size-[1em];
+}
+
+.render-fancy {
+  @apply [&_h1]:h1 [&_h2]:h2 [&_h3]:h3 [&_h4]:h4 [&_blockquote]:quote focus:border-primary/50 [&_:is(ul,li)]:ml-8 [&_a]:underline [&_iframe]:max-w-full [&_mark]:rounded [&_mark]:box-decoration-clone [&_mark]:px-1 [&_mark]:py-0.5 [&_ol_li]:list-decimal [&_span[data-type="emoji"]]:inline-flex [&_span[data-type="emoji"]]:items-center dark:[&_span[data-type="emoji"]]:hue-rotate-180 dark:[&_span[data-type="emoji"]]:invert [&_span[data-type="emoji"]_img]:size-[1em] [&_ul_li]:list-disc;
+}
+
+.render-white-content {
+  @apply rounded bg-background text-foreground dark:bg-[hsl(222.2,84%,95.1%)] dark:text-black dark:hue-rotate-180 dark:invert;
+}

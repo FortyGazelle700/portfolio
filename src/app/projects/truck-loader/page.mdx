@@ -1,0 +1,43 @@
+# Truck Loader
+
+## Project Background
+
+"Truck Loader" is a logistics-focused application developed to streamline inventory management and the tracking of musical instruments. Primarily used for tracking and locating items via QR codes, this application provides a user-friendly interface for quick updates on item status, location, and history. The application is intended for teams managing large numbers of instruments, making it easy to scan, track, and maintain up-to-date inventory details.
+
+### Project Goals
+
+The main objective of Truck Loader is to simplify the complex task of inventory and tracking for large-scale instrument collections. This includes quick location checks, movement logs, and a seamless QR code scanning function. Additional goals include:
+
+- Providing real-time inventory updates.
+- Enabling item categorization for easier sorting and retrieval.
+- Implementing secure role-based access so users can only interact with relevant sections.
+
+## Design Decisions
+
+Truck Loader is designed to be minimalistic, focusing on functionality and ease of navigation. Key features include:
+
+- **QR Code Integration**: Instruments can be scanned with QR codes, instantly showing their location and status in the system.
+- **Inventory Overview**: The application offers an inventory dashboard with filterable data for quick and easy tracking.
+- **Location Tracking**: Users can log where each instrument is placed, with the ability to see historical location data and movements.
+
+The application is built with **Svelte** and **SvelteKit**, allowing a fast and efficient front-end experience. **Prisma** is used for seamless integration with the backend database, ensuring data consistency and reliability.
+
+## Development Process
+
+Since its initial release, Truck Loader has followed a single-iteration approach, with monthly updates introducing new features based on user feedback. Each month, improvements have been implemented to enhance the user experience and incorporate requested features such as enhanced QR scanning and location categorization. Updates have focused on:
+
+- Performance improvements for smoother QR scanning.
+- Enhanced filtering options on the dashboard.
+- User interface refinements for a more intuitive experience.
+
+## Technology Stack
+
+Truck Loader is built with the following technologies:
+
+- **Svelte and SvelteKit**: To enable a fast, interactive user interface and ensure a responsive, client-friendly experience.
+- **Prisma**: For handling database operations and creating a robust, type-safe connection to the backend.
+- **QR Code API**: Allows instruments to be scanned and logged in real-time for efficient tracking and management.
+
+## Current Status and Future Plans
+
+Truck Loader is in active use and continues to evolve with regular feature additions and performance enhancements. Plans for future updates include a notification system for inventory low warnings, as well as improved role-based access controls for larger teams managing multiple inventories.
