@@ -8,6 +8,7 @@ import {
   CloudRainWind,
   CloudSun,
   CodeXml,
+  Coffee,
   Database,
   Github,
   House,
@@ -16,6 +17,7 @@ import {
   Layers3,
   MapPin,
   Newspaper,
+  NotepadText,
   Pipette,
   PlugZap,
   Presentation,
@@ -26,6 +28,7 @@ import {
   Triangle,
   Trophy,
   UsersRound,
+  Video,
   Wind,
   Wrench,
 } from "lucide-react";
@@ -36,7 +39,7 @@ import { toolbox } from "@lucide/lab";
 export default async function Home() {
   const competitions = [
     {
-      date: "Oct 23 2024",
+      dates: ["Oct 23 2024"],
       title: "KU High School Design Competition 2024",
       place: "2nd",
       description:
@@ -111,6 +114,78 @@ export default async function Home() {
             icon: <Radar />,
             text: "Radar.io",
             href: "https://radar.com/",
+          },
+        ],
+      ],
+    },
+    {
+      dates: ["Nov 06 2024"],
+      title: "K-State High School Programming Contest",
+      place: "2nd",
+      description:
+        "The contest is open to all high school students. Each team will consist of up to four students with only one laptop per team. In order that beginners as well as more experienced programmers may compete, there will be two divisions: a beginning division consisting of students who have completed at most one semester of programming and have no more than one year programming experience, and an advanced division open to all high school students. Because different schools use different types of machines and different programming languages in their instruction, teams must provide their own computers and software. Any programming language may be used for the contest.\n\nSolutions to the contest problems will require numerical calculations, simple string manipulation and logical decisions. The main difference between the two divisions will be in the complexity of the programming logic required to solve the problems. For example, more use of nested loops will be required to solve some advanced division problems. Also, double-dimensioned arrays may be needed to solve advanced problems, whereas single-dimensioned arrays should be sufficient to solve the beginning problems.",
+      readMoreLink: "/competitons/kstatehspc2024/",
+      links: [
+        [
+          {
+            icon: <House />,
+            text: "Overview",
+            href: "https://www.cs.ksu.edu/outreach/programming-contest/",
+          },
+          {
+            icon: <MapPin />,
+            text: "Kansas State University",
+            href: "https://www.google.com/maps/place/K-State+Alumni+Association/@39.1872395,-96.584261,17.83z/data=!4m14!1m7!3m6!1s0x87bdcd8d57327449:0xd66f9bcdf791b75!2sKansas+State+University!8m2!3d39.1974437!4d-96.5847249!16zL20vMDQ5ZGs!3m5!1s0x87bdcd85f86aaaab:0xbc2f682175bb866c!8m2!3d39.1865681!4d-96.5843146!16s%2Fg%2F1tlbv72n",
+          },
+          {
+            icon: <Newspaper />,
+            text: "Rules",
+            href: "https://www.cs.ksu.edu/outreach/programming-contest/registration-rules/",
+          },
+        ],
+      ],
+      tools: [
+        [
+          {
+            icon: <Coffee />,
+            text: "Java",
+            href: "https://www.java.com/en/",
+          },
+        ],
+      ],
+    },
+    {
+      dates: ["Nov 16 2024", "Dec 14 2024", "Jan 11 2025", "Jan 18 2025"],
+      title: "FIRST Tech Challenge Robotics",
+      place: "-NA",
+      description:
+        "The ocean is more than what you can see on the horizon. Beneath the surface lies our planet’s most complex ecosystems, full of life and potential for exploration and learning, where each inhabitant has a role to play in building a thriving environment.\n\nDuring the 2024-2025 FIRST season, FIRST® DIVE℠ presented by Qualcomm, teams will use their STEM and collaboration skills to explore life beneath the surface of the ocean. Along the way, we’ll uncover the potential in each of us to strengthen our community and innovate for a better world with healthy oceans. Join us as we explore the future.",
+      readMoreLink: "/competitons/robotics202425/",
+      links: [
+        [
+          {
+            icon: <House />,
+            text: "Overview",
+            href: "https://info.firstinspires.org/first-dive",
+          },
+          {
+            icon: <Video />,
+            text: "Overview Video",
+            href: "https://www.youtube.com/watch?v=ewlDPvRK4U4",
+          },
+          {
+            icon: <Trophy />,
+            text: "FTC Rankings",
+            href: "https://ftcscout.org/teams/25790",
+          },
+        ],
+      ],
+      tools: [
+        [
+          {
+            icon: <Coffee />,
+            text: "Java",
+            href: "https://www.java.com/en/",
           },
         ],
       ],
@@ -229,6 +304,59 @@ export default async function Home() {
             icon: <Triangle />,
             text: "Vercel",
             href: "https://vercel.com/",
+          },
+        ],
+      ],
+    },
+    {
+      date: "Dec 11 2024",
+      title: "Cloudi Weather",
+      description:
+        "Cloudi Weather is a weather app written in React Native, marking my first venture into mobile application development. The app provides comprehensive weather information, including hourly and daily forecasts, as well as an interactive weather radar. Users can easily navigate through the intuitive interface to get real-time updates and detailed weather insights for their location.",
+      readMoreLink: "/projects/cloudi/",
+      goToLink: "",
+      links: [
+        [
+          {
+            icon: <Presentation />,
+            text: "Presentation",
+            href: "https://www.canva.com/design/DAGY8zt0d4I/MMh0aQQ04jFYgZgeuD9qqg/view",
+          },
+          {
+            icon: <Github />,
+            text: "Git Repository",
+            href: "https://github.com/FortyGazelle700/weather-expo",
+          },
+        ],
+      ],
+      tools: [
+        [
+          {
+            icon: <Rabbit />,
+            text: "Bun",
+            href: "https://bun.sh/",
+          },
+          {
+            icon: <Atom />,
+            text: "React Native",
+            href: "https://reactnative.dev/",
+          },
+          {
+            icon: <NotepadText />,
+            text: "Expo",
+            href: "https://docs.expo.dev/",
+          },
+        ],
+        [
+          {
+            icon: <CloudSun />,
+            text: "OpenMeteo",
+            href: "https://open-meteo.com/",
+          },
+          {
+            icon: <Radar />,
+            text: "NOAA + NWS",
+            href: "https://radar.weather.gov/",
           },
         ],
       ],
@@ -404,16 +532,17 @@ export default async function Home() {
         <h3 className="h3 mt-8 animate-fade-in opacity-0 animate-delay-2800">
           About Me
         </h3>
-        <p className="animate-fade-in opacity-0 animate-delay-3000">
+        <p className="animate-fade-in text-xs text-muted-foreground opacity-0 animate-delay-3000">
           I{"'"}m Drake Semchyshyn, a web developer with a strong foundation in
           building dynamic and user-friendly websites using modern frameworks
           like Next.js and SvelteKit. With a background in both front-end and
           back-end development, I bring expertise in languages like Rust and
           Python to create efficient, scalable applications. Beyond coding, I
           stay engaged with teamwork and discipline through competitive
-          volleyball and as an active member of my school{"'"}s marching band.
-          My projects showcase my commitment to clean, functional design and my
-          drive for continuous learning and improvement in web development.
+          volleyball, as an active member of my school{"'"}s marching band, and
+          as a member of the JAG Robotics team here at West. My projects
+          showcase my commitment to clean, functional design and my drive for
+          continuous learning and improvement in web development.
         </p>
       </section>
       <section className="flex flex-col gap-2 p-4 pb-16">
@@ -435,7 +564,11 @@ export default async function Home() {
                 <span className="text-[0.5rem] text-muted-foreground">
                   Competed
                 </span>
-                {competition.date}
+                {competition.dates.map((date) => (
+                  <span className="mb-1 block font-mono" key={date}>
+                    {date}
+                  </span>
+                ))}
               </div>
               <div className="mt-8 flex flex-col gap-2">
                 <ArrowRight className="text-lg" />
@@ -466,9 +599,12 @@ export default async function Home() {
                     <ArrowRight className="rotate-90" /> Hover to view more
                   </div>
                 </div>
-                <p className="text-xs text-muted-foreground">
-                  {competition.description}
-                </p>
+                <p
+                  className="text-xs text-muted-foreground"
+                  dangerouslySetInnerHTML={{
+                    __html: competition.description.replaceAll("\n", "<br />"),
+                  }}
+                />
                 <div className="mt-3 flex gap-2">
                   <b className="w-[10ch] flex-shrink-0 text-xs">Links</b>
                   <div className="flex flex-1 flex-col gap-4">
@@ -539,7 +675,7 @@ export default async function Home() {
                 <span className="text-[0.5rem] text-muted-foreground">
                   Released
                 </span>
-                {project.date}
+                <span className="mb-1 block font-mono">{project.date}</span>
               </div>
               <div className="mt-8 flex flex-col gap-2">
                 <ArrowRight className="text-lg" />
